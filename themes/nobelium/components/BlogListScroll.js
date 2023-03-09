@@ -74,7 +74,7 @@ export const BlogListScroll = props => {
                   className="w-full my-4 py-4 text-center cursor-pointer "
               >
                   {' '}
-                  {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
+                  {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE}`}{' '}
               </div>
 
           </div>
