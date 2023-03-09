@@ -20,15 +20,15 @@ export const ArticleInfo = (props) => {
             {post?.type !== 'Page' && <>
             <nav className="flex mt-7 items-start text-gray-500 dark:text-gray-400">
             <div className="flex mb-4">
-              <a href={BLOG.CONTACT_GITHUB || '#'} className="flex">
+              <a href={BLOG.CONTACT_GITHUB || 'https://twitter.com/hjwucc'} className="flex">
                 <Image
-                  alt={BLOG.author}
+                  alt={BLOG.AUTHOR}
                   width={24}
                   height={24}
-                  src={`https://gravatar.com/avatar/${emailHash}`}
+                  src='../../../public/avatar.png'
                   className="rounded-full"
                 />
-                <p className="ml-2 md:block">{BLOG.author}</p>
+                <p className="ml-2 md:block">{BLOG.AUTHOR}</p>
               </a>
               <span className="block">&nbsp;/&nbsp;</span>
             </div>
