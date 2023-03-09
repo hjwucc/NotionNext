@@ -1,5 +1,6 @@
 import BLOG from '@/blog.config'
 import DarkModeButton from '@/components/DarkModeButton'
+import Vercel from '@/components/Vercel'
 
 export const Footer = (props) => {
   const d = new Date()
@@ -25,6 +26,7 @@ export const Footer = (props) => {
        <div className="flex align-baseline justify-between flex-wrap">
          <p>
            © {BLOG.AUTHOR} {copyrightDate}
+           <Vercel />
          </p>
        </div>
      </div>
