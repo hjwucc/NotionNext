@@ -1,6 +1,5 @@
 import BLOG from '@/blog.config'
 import DarkModeButton from '@/components/DarkModeButton'
-import Vercel from '@/components/Vercel'
 
 export const Footer = (props) => {
   const d = new Date()
@@ -27,7 +26,6 @@ export const Footer = (props) => {
          <p>
            © {BLOG.AUTHOR} {copyrightDate}
          </p>
-         <Vercel />
        </div>
      </div>
    </footer>
