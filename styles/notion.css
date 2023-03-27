@@ -584,12 +584,12 @@ summary > .notion-h {
 .notion-page-link {
   display: flex;
   color: var(--fg-color);
-  text-decoration: none;
+  text-decoration: underline;
   width: 100%;
   height: 30px;
   margin: 1px 0;
   transition: background 120ms ease-in 0s;
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 
 .notion-page-link:hover {
@@ -655,10 +655,15 @@ svg.notion-page-icon {
 
 .notion-list-disc {
   list-style-type: disc;
-  padding-inline-start: 1.7em;
+  padding-inline-start: 1.4em;
   margin-top: 0;
   margin-bottom: 0;
 }
+
+.notion-list-disc > ul.notion-list-disc {
+  padding-inline-start: 0em;
+}
+
 .notion-list-numbered {
   list-style-type: decimal;
   padding-inline-start: 1.6em;
@@ -1408,7 +1413,7 @@ code[class*='language-'] {
 }
 
 .notion-collection-card{
-  cursor: default !important;
+  /* cursor: default !important; */
 }
 
 .notion-collection-card-property .notion-link {
@@ -1623,6 +1628,7 @@ code[class*='language-'] {
 
 .notion-collection-card-cover .lazy-image-wrapper {
   padding: 0 !important;
+  z-index: 20;
   height: 100%;
 }
 
@@ -2010,4 +2016,11 @@ code.language-mermaid {
 
 .notion-equation-inline .katex-display {
   margin: 0 0 !important;
+}
+
+.two-line-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
