@@ -32,7 +32,7 @@ const BLOG = {
     // 字体CSS 例如 https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css
     'https://fonts.googleapis.com/css?family=Bitter&display=swap',
     'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300&display=swap',
-    'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300&display=swap'
+    'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400&display=swap'
   ],
   FONT_SANS: [
     // 无衬线字体 例如'LXGW WenKai'
@@ -55,9 +55,8 @@ const BLOG = {
     '"Apple Color Emoji"'
   ],
   FONT_SERIF: [
-    // 衬线字体 例如'LXGW WenKai'
-    'Bitter',
-    '"Noto Serif SC"',
+    'Noto Serif SC',
+    '"Bitter"',
     'SimSun',
     '"Times New Roman"',
     'Times',
@@ -89,8 +88,8 @@ const BLOG = {
   PRISM_JS_PATH: 'https://npm.elemecdn.com/prismjs@1.29.0/components/',
   PRISM_THEME_PATH:
     'https://npm.elemecdn.com/prism-themes/themes/prism-a11y-dark.min.css', // 代码样式主题 更多参考 https://github.com/PrismJS/prism-themes
-  CODE_MAC_BAR: true, // 代码左上角显示mac的红黄绿图标
-  CODE_LINE_NUMBERS: process.env.NEXT_PUBLIC_CODE_LINE_NUMBERS || 'false', // 是否显示行号
+  CODE_MAC_BAR: false, // 代码左上角显示mac的红黄绿图标
+  CODE_LINE_NUMBERS: process.env.NEXT_PUBLIC_CODE_LINE_NUMBERS || 'true', // 是否显示行号
 
   BACKGROUND_LIGHT: '#eeeeee', // use hex value, don't forget '#' e.g #fffefc
   BACKGROUND_DARK: '#000000', // use hex value, don't forget '#'
