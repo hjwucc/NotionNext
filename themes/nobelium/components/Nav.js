@@ -42,7 +42,7 @@ const Nav = props => {
       ref={navRef}
     >
       <div className="flex items-center">
-        <Link href="/" aria-label={BLOG.title}>
+        <Link href="/" aria-label={BLOG.title} style="display: flex;">
 
           <div className="h-6">
             {/* <SvgIcon/> */}
@@ -53,18 +53,17 @@ const Nav = props => {
 
           </div>
 
-
           {navBarTitle
             ? (
-              <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
+              <div className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
                 {navBarTitle}
-              </p>
+              </div>
             )
             : (
-              <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
+              <div className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
                 {siteInfo?.title}
                 {/* ,{' '}<span className="font-normal">{siteInfo?.description}</span> */}
-              </p>
+              </div>
             )}
         </Link>
       </div>
