@@ -41,8 +41,8 @@ const Nav = props => {
       id="sticky-nav"
       ref={navRef}
     >
-      <div className="flex items-center">
-        <Link href="/" aria-label={BLOG.title} style="display: flex;">
+      <div className="flex items-center" style="display:flex;">
+        <Link href="/" aria-label={BLOG.title}>
 
           <div className="h-6">
             {/* <SvgIcon/> */}
