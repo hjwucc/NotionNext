@@ -41,7 +41,7 @@ const Nav = props => {
       id="sticky-nav"
       ref={navRef}
     >
-      <div className="flex items-center" style="display:flex;">
+      <div className="flex items-center" >
         <Link href="/" aria-label={BLOG.title}>
 
           <div className="h-6">
@@ -52,7 +52,7 @@ const Nav = props => {
               : <SvgIcon />}
 
           </div>
-          <div>
+          <a href="/">
             {navBarTitle
               ? (
                 <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
@@ -65,7 +65,7 @@ const Nav = props => {
                   {/* ,{' '}<span className="font-normal">{siteInfo?.description}</span> */}
                 </p>
               )}
-          </div>
+          </a>
         </Link>
       </div>
       <NavBar {...props} />
