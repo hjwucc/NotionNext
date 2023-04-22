@@ -52,21 +52,21 @@ const Nav = props => {
               : <SvgIcon />}
 
           </div>
-          <a href="/">
-            {navBarTitle
-              ? (
-                <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
-                  {navBarTitle}
-                </p>
-              )
-              : (
-                <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
-                  {siteInfo?.title}
-                  {/* ,{' '}<span className="font-normal">{siteInfo?.description}</span> */}
-                </p>
-              )}
-          </a>
         </Link>
+        <a href="/">
+          {navBarTitle
+            ? (
+              <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
+                {navBarTitle}
+              </p>
+            )
+            : (
+              <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
+                {siteInfo?.title}
+                {/* ,{' '}<span className="font-normal">{siteInfo?.description}</span> */}
+              </p>
+            )}
+        </a>
       </div>
       <NavBar {...props} />
     </div>
