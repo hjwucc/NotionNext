@@ -53,7 +53,7 @@ const Nav = props => {
 
           </div>
         </Link>
-        <a href="/">
+        <Link href="/" aria-label={BLOG.title}>
           {navBarTitle
             ? (
               <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
@@ -66,7 +66,7 @@ const Nav = props => {
                 {/* ,{' '}<span className="font-normal">{siteInfo?.description}</span> */}
               </p>
             )}
-        </a>
+        </Link>
       </div>
       <NavBar {...props} />
     </div>
