@@ -17,12 +17,7 @@ export const BlogListPage = props => {
 
     return (
         <div className="w-full md:pr-12 mb-12">
-            <iframe
-                src={`https://ora.sh/embed/66d63cf5-055e-4ccb-b412-0537b541dd39`}
-                width="100%"
-                height="100%"
-                style={{border: "0", borderRadius: "4px"}}
-            />
+
             <div id="container">
                 {posts?.map(post => (
                     <BlogPost key={post.id} post={post}/>
