@@ -31,8 +31,8 @@ const BLOG = {
     FONT_URL: [
         // 字体CSS 例如 https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css
         'https://fonts.googleapis.com/css?family=Bitter&display=swap',
-        'https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap',
-        'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400&display=swap'
+        'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300&display=swap',
+        'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300&display=swap'
     ],
     FONT_SANS: [
         // 无衬线字体 例如'LXGW WenKai'
@@ -55,8 +55,9 @@ const BLOG = {
         '"Apple Color Emoji"'
     ],
     FONT_SERIF: [
-        'Noto Serif SC',
-        '"Bitter"',
+        // 衬线字体 例如'LXGW WenKai'
+        'Bitter',
+        '"Noto Serif SC"',
         'SimSun',
         '"Times New Roman"',
         'Times',
@@ -65,7 +66,7 @@ const BLOG = {
         '"Segoe UI Symbol"',
         '"Apple Color Emoji"'
     ],
-    FONT_AWESOME: '/css/all.min.css', // font-awesome 字体图标地址
+    FONT_AWESOME: process.env.NEXT_PUBLIC_FONT_AWESOME_PATH || '/css/all.min.css', // font-awesome 字体图标地址、默认读取本地; 可选 https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css
 
     // 自定义外部脚本，外部样式
     CUSTOM_EXTERNAL_JS: [''], // e.g. ['http://xx.com/script.js','http://xx.com/script.js']
@@ -94,6 +95,10 @@ const BLOG = {
     BACKGROUND_LIGHT: '#eeeeee', // use hex value, don't forget '#' e.g #fffefc
     BACKGROUND_DARK: '#000000', // use hex value, don't forget '#'
     SUB_PATH: '', // leave this empty unless you want to deploy in a folder
+
+    POST_SHARE_BAR_ENABLE: process.env.NEXT_PUBLIC_POST_SHARE_BAR || 'true', // 文章分享功能 ，将在底部显示一个分享条
+    POSTS_SHARE_SERVICES: process.env.NEXT_PUBLIC_POST_SHARE_SERVICES || 'wechat,weibo,twitter,email,telegram', // 分享的服務，按顺序显示,逗号隔开
+    // 所有支持的分享服务：link(复制链接),wechat(微信),qq,weibo(微博),email(邮件),facebook,twitter,telegram,messenger,line,reddit,whatsapp,linkedin,vkshare,okshare,tumblr,livejournal,mailru,viber,workplace,pocket,instapaper,hatena
 
     POST_URL_PREFIX: process.env.NEXT_PUBLIC_POST_URL_PREFIX || '',
     // POST类型文章的默认路径前缀，例如默认POST类型的路径是  /article/[slug]
@@ -140,7 +145,7 @@ const BLOG = {
     WIDGET_PET_LINK:
         process.env.NEXT_PUBLIC_WIDGET_PET_LINK ||
         'https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json', // 挂件模型地址 @see https://github.com/xiazeyu/live2d-widget-models
-    WIDGET_PET_SWITCH_THEME: true, // 点击宠物挂件切换博客主题
+    WIDGET_PET_SWITCH_THEME: false, // 点击宠物挂件切换博客主题
 
     // 音乐播放插件
     MUSIC_PLAYER: process.env.NEXT_PUBLIC_MUSIC_PLAYER || false, // 是否使用音乐播放插件
@@ -178,7 +183,6 @@ const BLOG = {
         process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING_LRC_TYPE || '1', // 可选值： 3 | 1 | 0（0：禁用 lrc 歌词，1：lrc 格式的字符串，3：lrc 文件 url）
 
     // ----> 评论互动 可同时开启多个支持 WALINE VALINE GISCUS CUSDIS UTTERRANCES GITALK
-
     // twikoo
     COMMENT_TWIKOO_ENV_ID: process.env.NEXT_PUBLIC_COMMENT_ENV_ID || '', // TWIKOO地址 腾讯云环境填 envId；Vercel 环境域名地址（https://xxx.vercel.app)
 
@@ -249,10 +253,10 @@ const BLOG = {
         TWITTER_USERNAME: process.env.NEXT_PUBLIC_TWITTER_USERNAME || '',
         TOKEN: process.env.NEXT_PUBLIC_WEBMENTION_TOKEN || ''
     },
-
     // <---- 评论插件
 
     // ----> 站点统计
+    ANALYTICS_VERCEL: process.env.NEXT_PUBLIC_ANALYTICS_VERCEL || false, // vercel自带的统计 https://vercel.com/docs/concepts/analytics/quickstart https://github.com/tangly1024/NotionNext/issues/897
     ANALYTICS_BUSUANZI_ENABLE: false, // 展示网站阅读量、访问数 see http://busuanzi.ibruce.info/
     ANALYTICS_BAIDU_ID: process.env.NEXT_PUBLIC_ANALYTICS_BAIDU_ID || 'b890783070ca2e4fad2558066ae76b23', // e.g 只需要填写百度统计的id，[baidu_id] -> https://hm.baidu.com/hm.js?[baidu_id]
     ANALYTICS_CNZZ_ID: process.env.NEXT_PUBLIC_ANALYTICS_CNZZ_ID || '', // 只需要填写站长统计的id, [cnzz_id] -> https://s9.cnzz.com/z_stat.php?id=[cnzz_id]&web_id=[cnzz_id]
@@ -267,7 +271,6 @@ const BLOG = {
 
     SEO_GOOGLE_SITE_VERIFICATION:
         process.env.NEXT_PUBLIC_SEO_GOOGLE_SITE_VERIFICATION || '', // Remove the value or replace it with your own google site verification code
-
     // <---- 站点统计
 
     // 谷歌广告
@@ -303,7 +306,7 @@ const BLOG = {
 
     // 作废配置
     AVATAR: process.env.NEXT_PUBLIC_AVATAR || '/avatar.png', // 作者头像，被notion中的ICON覆盖。若无ICON则取public目录下的avatar.png
-    TITLE: process.env.NEXT_PUBLIC_TITLE || 'WuHJ Personel Site', // 站点标题 ，被notion中的页面标题覆盖
+    TITLE: process.env.NEXT_PUBLIC_TITLE || 'WuHJ Personal Site', // 站点标题 ，被notion中的页面标题覆盖
     HOME_BANNER_IMAGE:
         process.env.NEXT_PUBLIC_HOME_BANNER_IMAGE || './bg_image.jpg', // 首页背景大图, 会被notion中的封面图覆盖，若无封面图则会使用代码中的 /public/bg_image.jpg 文件
     DESCRIPTION:
