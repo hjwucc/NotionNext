@@ -37,6 +37,7 @@ const BLOG = {
     FONT_SANS: [
       // 无衬线字体 例如'LXGW WenKai'
       'PingFang SC Regular',
+      'HarmonyOS_Regular',
       '"PingFang SC"',
       '-apple-system',
       'BlinkMacSystemFont',
@@ -224,7 +225,7 @@ const BLOG = {
     COMMENT_GITALK_DISTRACTION_FREE_MODE: false, // 类似facebook的无干扰模式
   
     COMMENT_GITTER_ROOM: process.env.NEXT_PUBLIC_COMMENT_GITTER_ROOM || '', // gitter聊天室 see https://gitter.im/ 不需要则留空
-    COMMENT_DAO_VOICE_ID: process.env.NEXT_PUBLIC_COMMENT_DAO_VOICE_ID || '', // DaoVoice http://dashboard.daovoice.io/get-started
+    COMMENT_DAO_VOICE_ID: process.env.NEXT_PUBLIC_COMMENT_DAO_VOICE_ID || '75b226d8', // DaoVoice http://dashboard.daovoice.io/get-started
     COMMENT_TIDIO_ID: process.env.NEXT_PUBLIC_COMMENT_TIDIO_ID || '', // [tidio_id] -> //code.tidio.co/[tidio_id].js
   
     COMMENT_VALINE_APP_ID: process.env.NEXT_PUBLIC_VALINE_ID || '', // Valine @see https://valine.js.org/quickstart.html 或 https://github.com/stonehank/react-valine#%E8%8E%B7%E5%8F%96app-id-%E5%92%8C-app-key
@@ -305,7 +306,7 @@ const BLOG = {
   
     // 作废配置
     AVATAR: process.env.NEXT_PUBLIC_AVATAR || '/avatar.png', // 作者头像，被notion中的ICON覆盖。若无ICON则取public目录下的avatar.png
-    TITLE: process.env.NEXT_PUBLIC_TITLE || '', // 站点标题 ，被notion中的页面标题覆盖
+    TITLE: process.env.NEXT_PUBLIC_TITLE || 'WuHJ Personal Site', // 站点标题 ，被notion中的页面标题覆盖
     HOME_BANNER_IMAGE:
         process.env.NEXT_PUBLIC_HOME_BANNER_IMAGE || './bg_image.jpg', // 首页背景大图, 会被notion中的封面图覆盖，若无封面图则会使用代码中的 /public/bg_image.jpg 文件
     DESCRIPTION:
