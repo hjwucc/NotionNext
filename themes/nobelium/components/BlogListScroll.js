@@ -50,16 +50,16 @@ export const BlogListScroll = props => {
                       <h2 className="mb-4">
                           <Link
                               href={`/${p.slug}`}
-                              className="text-black text-xl md:text-2xl no-underline hover:underline">
+                              className="dark:text-gray-50 text-black dark:text-white text-xl md:text-2xl no-underline hover:underline">
                                 {p.title}
                           </Link>
                       </h2>
 
-                      <div className="mb-4 text-sm text-gray-700">
-                          by <a href="#" className="text-gray-700">{BLOG.AUTHOR}</a> on {p.date?.start_date || p.createdTime}
-                          <span className="font-bold mx-1"> | </span>
+                      <div className="mb-4 text-sm text-gray-700 dark:text-white">
+                          by <a href="#" className="text-gray-700 dark:text-white">{BLOG.AUTHOR}</a> on {p.date?.start_date || p.createdTime}
+                          {/* <span className="font-bold mx-1"> | </span>
                           <a href="#" className="text-gray-700">{p.category}</a>
-                          <span className="font-bold mx-1"> | </span>
+                          <span className="font-bold mx-1"> | </span> */}
                           {/* <a href="#" className="text-gray-700">2 Comments</a> */}
                       </div>
 
@@ -74,7 +74,7 @@ export const BlogListScroll = props => {
                   className="w-full my-4 py-4 text-center cursor-pointer "
               >
                   {' '}
-                  {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
+                  {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE}`}{' '}
               </div>
 
           </div>

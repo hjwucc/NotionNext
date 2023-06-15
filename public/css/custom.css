@@ -1,4 +1,6 @@
 /* 静态文件导入 自定义样式*/
+#daodream-container .daodream-powered-by span {display:none !important;}
+.daodream-composer-send-button {display: inline !important;}
 
 #theme-fukasawa .sideLeft hr{
     opacity: .04;

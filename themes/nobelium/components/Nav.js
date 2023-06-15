@@ -34,42 +34,43 @@ const Nav = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sentinalRef])
   return <>
-        <div className="observer-element h-4 md:h-12" ref={sentinalRef}></div>
-        <div
-            className={`sticky-nav m-auto w-full h-6 flex flex-row justify-between items-center mb-2 md:mb-12 py-8 bg-opacity-60 ${!fullWidth ? 'max-w-3xl px-4' : 'px-4 md:px-24'
-                }`}
-            id="sticky-nav"
-            ref={navRef}
-        >
-            <div className="flex items-center">
-                <Link href="/" aria-label={BLOG.title}>
+    <div className="observer-element h-4 md:h-12" ref={sentinalRef}></div>
+    <div
+      className={`sticky-nav m-auto w-full h-6 flex flex-row justify-between items-center mb-2 md:mb-12 py-8 bg-opacity-60 ${!fullWidth ? 'max-w-3xl px-4' : 'px-4 md:px-24'
+        }`}
+      id="sticky-nav"
+      ref={navRef}
+    >
+      <div className="flex items-center" >
+        <Link href="/" aria-label={BLOG.title}>
 
-                    <div className="h-6">
-                        {/* <SvgIcon/> */}
-                        {CONFIG_NOBELIUM.NAV_NOTION_ICON
-                        /* eslint-disable-next-line @next/next/no-img-element */
-                          ? <img src={siteInfo?.icon} width={24} height={24} alt={BLOG.AUTHOR} />
-                          : <SvgIcon />}
+          <div className="h-6">
+            {/* <SvgIcon/> */}
+            {CONFIG_NOBELIUM.NAV_NOTION_ICON
+              /* eslint-disable-next-line @next/next/no-img-element */
+              ? <img src={siteInfo?.icon} width={24} height={24} alt={BLOG.AUTHOR} />
+              : <SvgIcon />}
 
-                    </div>
-
-                </Link>
-                {navBarTitle
-                  ? (
-                        <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
-                            {navBarTitle}
-                        </p>
-                    )
-                  : (
-                        <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
-                            {siteInfo?.title}
-                            {/* ,{' '}<span className="font-normal">{siteInfo?.description}</span> */}
-                        </p>
-                    )}
-            </div>
-            <NavBar {...props} />
-        </div>
-    </>
+          </div>
+        </Link>
+        <Link href="/" aria-label={BLOG.title}>
+          {navBarTitle
+            ? (
+              <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
+                {navBarTitle}
+              </p>
+            )
+            : (
+              <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
+                {siteInfo?.title}
+                {/* ,{' '}<span className="font-normal">{siteInfo?.description}</span> */}
+              </p>
+            )}
+        </Link>
+      </div>
+      <NavBar {...props} />
+    </div>
+  </>
 }
 
 const NavBar = props => {
@@ -102,18 +103,18 @@ const NavBar = props => {
   }
 
   return (
-        <div className="flex-shrink-0">
-            <ul className=" hidden md:flex flex-row">
-                {links?.map(link => <MenuItemDrop key={link?.id} link={link} />)}
-            </ul>
-            <div className='md:hidden'><i onClick={toggleOpen} className='fas fa-bars cursor-pointer px-5 block md:hidden'></i>
-                <Collapse collapseRef={collapseRef} isOpen={isOpen} type='vertical' className='fixed top-16 right-6'>
-                    <div className='dark:border-black bg-white dark:bg-black rounded border p-2 text-sm'>
-                        {links?.map(link => <MenuItemCollapse key={link?.id} link={link} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)}/>)}
-                    </div>
-                </Collapse>
-            </div>
-        </div>
+    <div className="flex-shrink-0">
+      <ul className=" hidden md:flex flex-row">
+        {links?.map(link => <MenuItemDrop key={link?.id} link={link} />)}
+      </ul>
+      <div className='md:hidden'><i onClick={toggleOpen} className='fas fa-bars cursor-pointer px-5 block md:hidden'></i>
+        <Collapse collapseRef={collapseRef} isOpen={isOpen} type='vertical' className='fixed top-16 right-6'>
+          <div className='dark:border-black bg-white dark:bg-black rounded border p-2 text-sm'>
+            {links?.map(link => <MenuItemCollapse key={link?.id} link={link} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)} />)}
+          </div>
+        </Collapse>
+      </div>
+    </div>
   )
 }
 
