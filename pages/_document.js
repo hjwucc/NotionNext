@@ -2,7 +2,6 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import BLOG from '@/blog.config'
 import CommonScript from '@/components/CommonScript'
-import Loading from '@/components/Loading'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -18,11 +17,10 @@ class MyDocument extends Document {
                     <CommonScript />
                 </Head>
 
-                <body className={`${BLOG.FONT_STYLE} font-light bg-day dark:bg-night`}>
+                <body className={`${BLOG.FONT_STYLE} font-light scroll-smooth`}>
                     <Main />
                     <NextScript />
                 </body>
-                <Loading />
             </Html>
     )
   }
