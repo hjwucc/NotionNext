@@ -2,9 +2,11 @@ import Image from 'next/image'
 import BLOG from '@/blog.config'
 import TagItem from './TagItem'
 import md5 from 'js-md5'
+import {useGlobal} from "@/lib/global";
 
 export const ArticleInfo = (props) => {
     const {post} = props
+    const { locale } = useGlobal()
 
     const emailHash = md5(BLOG.CONTACT_EMAIL)
 
