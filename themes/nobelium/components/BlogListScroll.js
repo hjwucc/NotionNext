@@ -44,9 +44,9 @@ export const BlogListScroll = props => {
   })
 
   return (
-      <div id="posts-wrapper" className="w-full md:pr-12 mb-12 border-b dark:border-gray-800" ref={targetRef}>
+      <div id="posts-wrapper" className="w-full md:pr-12 mb-12" ref={targetRef}>
               {postsToShow.map(p => (
-                  <article key={p.id} className="mb-12" >
+                  <article key={p.id} className="mb-12 border-b dark:border-gray-800" >
                       <h2 className="mb-4">
                           <Link
                               href={`/${p.slug}`}
@@ -57,10 +57,6 @@ export const BlogListScroll = props => {
 
                       <div className="mb-4 text-sm text-gray-700 dark:text-white">
                           by <a href="#" className="text-gray-700 dark:text-white">{BLOG.AUTHOR}</a> on {p.date?.start_date || p.createdTime}
-                          {/* <span className="font-bold mx-1"> | </span>
-                          <a href="#" className="text-gray-700">{p.category}</a>
-                          <span className="font-bold mx-1"> | </span> */}
-                          {/* <a href="#" className="text-gray-700">2 Comments</a> */}
                       </div>
 
                       <p className="text-gray-700 leading-normal">
