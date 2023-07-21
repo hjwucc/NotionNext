@@ -30,7 +30,7 @@ export const ArticleInfo = (props) => {
                             />
                             <p className="ml-2 md:block">{BLOG.AUTHOR}</p>
                         </a>
-                        <span className="block">&nbsp;/&nbsp;</span>
+                        <span className="block">&nbsp;|&nbsp;</span>
                     </div>
                     <div className="mr-2 mb-4 md:ml-0">
                         {post?.publishTime}

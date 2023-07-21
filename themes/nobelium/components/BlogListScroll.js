@@ -51,7 +51,7 @@ export const BlogListScroll = props => {
                       <h2 className="mb-4">
                           <Link
                               href={`/${p.slug}`}
-                              className="cursor-pointer font-bold  hover:underline text-3xl leading-tight text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-blue-400">
+                              className="cursor-pointer font-bold  hover:underline text-3xl leading-tight text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400">
                                 {p.title}
                           </Link>
                       </h2>
