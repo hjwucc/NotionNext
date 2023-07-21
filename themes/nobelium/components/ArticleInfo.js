@@ -1,52 +1,55 @@
-
 import Image from 'next/image'
 import BLOG from '@/blog.config'
 import TagItem from './TagItem'
 import md5 from 'js-md5'
 
 export const ArticleInfo = (props) => {
-  const { post } = props
+    const {post} = props
 
-  const emailHash = md5(BLOG.CONTACT_EMAIL)
+    const emailHash = md5(BLOG.CONTACT_EMAIL)
 
-  return <section className="flex-wrap flex mt-2 text-gray--600 dark:text-gray-400 font-light leading-8">
+    return <section className="flex-wrap flex mt-2 text-gray--600 dark:text-gray-400 font-light leading-8">
         <div>
 
             <div className="font-bold text-3xl text-black dark:text-white">
-            {post?.title}
+                {post?.title}
             </div>
 
             {post?.type !== 'Page' && <>
-            <nav className="flex mt-7 items-start text-gray-500 dark:text-gray-400">
-            <div className="flex mb-4">
-              <a href={BLOG.CONTACT_GITHUB || 'https://twitter.com/hjwucc'} className="flex">
-                <Image
-                  alt={BLOG.AUTHOR}
-                  width={24}
-                  height={24}
-                  src={`https://gravatar.com/avatar/${emailHash}`}
-                  className="rounded-full"
-                />
-                <p className="ml-2 md:block">{BLOG.AUTHOR}</p>
-              </a>
-              <span className="block">&nbsp;/&nbsp;</span>
-            </div>
-            <div className="mr-2 mb-4 md:ml-0">
-              {post?.publishTime}
-            </div>
-            {post?.tags && (
-              <div className="flex flex-nowrap max-w-full overflow-x-auto article-tags">
-                {post?.tags.map(tag => (
-                  <TagItem key={tag} tag={tag} />
-                ))}
-              </div>
-            )}
-            <span className="hidden busuanzi_container_page_pv mr-2">
-                    <i className='mr-1 fas fa-eye' />
-                    &nbsp;
-                    <span className="mr-2 busuanzi_value_page_pv" />
+                <nav className="flex mt-7 items-start text-gray-500 dark:text-gray-400">
+                    <div className="flex mb-4">
+                        <a href={BLOG.CONTACT_GITHUB || 'https://twitter.com/hjwucc'} className="flex">
+                            <Image
+                                alt={BLOG.AUTHOR}
+                                width={24}
+                                height={24}
+                                src={`https://gravatar.com/avatar/${emailHash}`}
+                                className="rounded-full"
+                            />
+                            <p className="ml-2 md:block">{BLOG.AUTHOR}</p>
+                        </a>
+                        <span className="block">&nbsp;/&nbsp;</span>
+                    </div>
+                    <div className="mr-2 mb-4 md:ml-0">
+                        {post?.publishTime}
+                    </div>
+                    <span className='mr-2'>|</span>
+                    <span className='mx-2 text-gray-400 dark:text-gray-500'>
+                        {locale.COMMON.LAST_EDITED_TIME}: {post?.lastEditedTime}
+                    </span>
+                    {post?.tags && (
+                        <div className="flex flex-nowrap max-w-full overflow-x-auto article-tags">
+                            {post?.tags.map(tag => (
+                                <TagItem key={tag} tag={tag}/>
+                            ))}
+                        </div>
+                    )}
+                    <span className="hidden busuanzi_container_page_pv mr-2">
+                    <i className='mr-1 fas fa-eye'/>
+                        &nbsp;
+                        <span className="mr-2 busuanzi_value_page_pv"/>
                 </span>
-             </nav>
+                </nav>
             </>}
 
         </div>
