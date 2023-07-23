@@ -103,7 +103,7 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
-    const {posts, topSlot} = props
+  const { posts, topSlot } = props
 
     // 在列表中进行实时过滤
     const [filterKey, setFilterKey] = useState('')
@@ -118,11 +118,10 @@ const LayoutPostList = props => {
         filteredBlogPosts = deepClone(posts)
     }
 
-    return (
-        <LayoutBase {...props} topSlot={<BlogListBar {...props} setFilterKey={setFilterKey}/>}>
+  return (
+        <LayoutBase {...props} topSlot={<BlogListBar {...props} setFilterKey={setFilterKey} />}>
             {topSlot}
-            {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} posts={filteredBlogPosts}/> :
-                <BlogListScroll {...props} posts={filteredBlogPosts}/>}
+            {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} posts={filteredBlogPosts} /> : <BlogListScroll {...props} posts={filteredBlogPosts} />}
         </LayoutBase>
     )
 }
