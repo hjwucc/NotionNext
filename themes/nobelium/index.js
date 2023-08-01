@@ -1,28 +1,29 @@
 import BLOG from '@/blog.config'
 import CONFIG from './config'
-import CommonHead from '@/components/CommonHead'
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Nav from './components/Nav'
-import {Footer} from './components/Footer'
+import { Footer } from './components/Footer'
 import JumpToTopButton from './components/JumpToTopButton'
 import Live2D from '@/components/Live2D'
-import {useGlobal} from '@/lib/global'
+import { useGlobal } from '@/lib/global'
 import Announcement from './components/Announcement'
-import {BlogListPage} from './components/BlogListPage'
-import {BlogListScroll} from './components/BlogListScroll'
-import {deepClone, isBrowser} from '@/lib/utils'
+import { BlogListPage } from './components/BlogListPage'
+import { BlogListScroll } from './components/BlogListScroll'
+import { deepClone, isBrowser } from '@/lib/utils'
 import SearchNavBar from './components/SearchNavBar'
 import BlogArchiveItem from './components/BlogArchiveItem'
-import {ArticleLock} from './components/ArticleLock'
+import { ArticleLock } from './components/ArticleLock'
 import NotionPage from '@/components/NotionPage'
-import {ArticleInfo} from './components/ArticleInfo'
+import { ArticleInfo } from './components/ArticleInfo'
 import Comment from '@/components/Comment'
+import { ArticleFooter } from './components/ArticleFooter'
 import ShareBar from '@/components/ShareBar'
 import Link from 'next/link'
 import BlogListBar from './components/BlogListBar'
-import {Transition} from '@headlessui/react'
-import {Style} from './style'
+import { Transition } from '@headlessui/react'
+import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
+import CommonHead from '@/components/CommonHead'
 import ArticleAround from './components/ArticleAround'
 
 /**
@@ -32,57 +33,56 @@ import ArticleAround from './components/ArticleAround'
  * @constructor
  */
 const LayoutBase = props => {
-    const {children, meta, post, topSlot} = props
+ const { children, post, topSlot, meta } = props
 
-    const fullWidth = post?.fullWidth ?? false
-    const {onLoading} = useGlobal()
+ const fullWidth = post?.fullWidth ?? false
+ const { onLoading } = useGlobal()
 
-    return (
-        <div id='theme-nobelium'
-             className='nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen'>
-            {/* SEO相关 */}
-            <CommonHead meta={meta}/>
-            <Style/>
+ return (
+     <div id='theme-nobelium' className='nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen'>
+      {/* SEO相关 */}
+      <CommonHead meta={meta}/>
+      {/* SEO相关 */}
+      <Style/>
 
-            {/* 顶部导航栏 */}
-            <Nav {...props} />
+      {/* 顶部导航栏 */}
+      <Nav {...props} />
 
-            {/* 主区 */}
-            <main id='out-wrapper'
-                  className={`relative m-auto flex-grow w-full transition-all ${!fullWidth ? 'max-w-2xl px-4' : 'px-4 md:px-24'}`}>
+      {/* 主区 */}
+      <main id='out-wrapper' className={`relative m-auto flex-grow w-full transition-all ${!fullWidth ? 'max-w-2xl px-4' : 'px-4 md:px-24'}`}>
 
-                <Transition
-                    show={!onLoading}
-                    appear={true}
-                    enter="transition ease-in-out duration-700 transform order-first"
-                    enterFrom="opacity-0 translate-y-16"
-                    enterTo="opacity-100 translate-y-0"
-                    leave="transition ease-in-out duration-300 transform"
-                    leaveFrom="opacity-100 translate-y-0"
-                    leaveTo="opacity-0 -translate-y-16"
-                    unmount={false}
-                >
-                    {/* 顶部插槽 */}
-                    {topSlot}
-                    {children}
-                </Transition>
+       <Transition
+           show={!onLoading}
+           appear={true}
+           enter="transition ease-in-out duration-700 transform order-first"
+           enterFrom="opacity-0 translate-y-16"
+           enterTo="opacity-100 translate-y-0"
+           leave="transition ease-in-out duration-300 transform"
+           leaveFrom="opacity-100 translate-y-0"
+           leaveTo="opacity-0 -translate-y-16"
+           unmount={false}
+       >
+        {/* 顶部插槽 */}
+        {topSlot}
+        {children}
+       </Transition>
 
-            </main>
+      </main>
 
-            {/* 页脚 */}
-            <Footer {...props} />
+      {/* 页脚 */}
+      <Footer {...props} />
 
-            {/* 右下悬浮 */}
-            <div className='fixed right-4 bottom-4'>
-                <JumpToTopButton/>
-            </div>
+      {/* 右下悬浮 */}
+      <div className='fixed right-4 bottom-4'>
+       <JumpToTopButton />
+      </div>
 
-            {/* 左下悬浮 */}
-            <div className="bottom-4 -left-14 fixed justify-end z-40">
-                <Live2D/>
-            </div>
-        </div>
-    )
+      {/* 左下悬浮 */}
+      <div className="bottom-4 -left-14 fixed justify-end z-40">
+       <Live2D />
+      </div>
+     </div>
+ )
 }
 
 /**
@@ -92,9 +92,9 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = props => {
-    return (
-        <LayoutPostList {...props} topSlot={<Announcement {...props} />}/>
-    )
+ return (
+     <LayoutPostList {...props} topSlot={<Announcement {...props} />} />
+ )
 }
 
 /**
@@ -103,27 +103,27 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
-  const { posts, topSlot } = props
+ const { posts, topSlot } = props
 
-    // 在列表中进行实时过滤
-    const [filterKey, setFilterKey] = useState('')
-    let filteredBlogPosts = []
-    if (filterKey && posts) {
-        filteredBlogPosts = posts.filter(post => {
-            const tagContent = post?.tags ? post?.tags.join(' ') : ''
-            const searchContent = post.title + post.summary + tagContent
-            return searchContent.toLowerCase().includes(filterKey.toLowerCase())
-        })
-    } else {
-        filteredBlogPosts = deepClone(posts)
-    }
+ // 在列表中进行实时过滤
+ const [filterKey, setFilterKey] = useState('')
+ let filteredBlogPosts = []
+ if (filterKey && posts) {
+  filteredBlogPosts = posts.filter(post => {
+   const tagContent = post?.tags ? post?.tags.join(' ') : ''
+   const searchContent = post.title + post.summary + tagContent
+   return searchContent.toLowerCase().includes(filterKey.toLowerCase())
+  })
+ } else {
+  filteredBlogPosts = deepClone(posts)
+ }
 
-  return (
-        <LayoutBase {...props} topSlot={<BlogListBar {...props} setFilterKey={setFilterKey} />}>
-            {topSlot}
-            {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} posts={filteredBlogPosts} /> : <BlogListScroll {...props} posts={filteredBlogPosts} />}
-        </LayoutBase>
-    )
+ return (
+     <LayoutBase {...props} topSlot={<BlogListBar {...props} setFilterKey={setFilterKey} />}>
+      {topSlot}
+      {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} posts={filteredBlogPosts} /> : <BlogListScroll {...props} posts={filteredBlogPosts} />}
+     </LayoutBase>
+ )
 }
 
 /**
@@ -133,20 +133,20 @@ const LayoutPostList = props => {
  * @returns
  */
 const LayoutSearch = props => {
-    const {keyword} = props
-    useEffect(() => {
-        if (isBrowser()) {
-            replaceSearchResult({
-                doms: document.getElementById('posts-wrapper'),
-                search: keyword,
-                target: {
-                    element: 'span',
-                    className: 'text-red-500 border-b border-dashed'
-                }
-            })
-        }
-    }, [])
-    return <LayoutPostList {...props} slotTop={<SearchNavBar {...props} />}/>
+ const { keyword } = props
+ useEffect(() => {
+  if (isBrowser) {
+   replaceSearchResult({
+    doms: document.getElementById('posts-wrapper'),
+    search: keyword,
+    target: {
+     element: 'span',
+     className: 'text-red-500 border-b border-dashed'
+    }
+   })
+  }
+ }, [])
+ return <LayoutPostList {...props} slotTop={<SearchNavBar {...props} />} />
 }
 
 /**
@@ -155,16 +155,14 @@ const LayoutSearch = props => {
  * @returns
  */
 const LayoutArchive = props => {
-    const {archivePosts} = props
-    return (
-        <LayoutBase {...props}>
-            <div className="mb-10 pb-20 md:py-12 p-3  min-h-screen w-full">
-                {Object.keys(archivePosts).map(archiveTitle => <BlogArchiveItem key={archiveTitle}
-                                                                                archiveTitle={archiveTitle}
-                                                                                archivePosts={archivePosts}/>)}
-            </div>
-        </LayoutBase>
-    )
+ const { archivePosts } = props
+ return (
+     <LayoutBase {...props}>
+      <div className="mb-10 pb-20 md:py-12 p-3  min-h-screen w-full">
+       {Object.keys(archivePosts).map(archiveTitle => <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />)}
+      </div>
+     </LayoutBase>
+ )
 }
 
 /**
@@ -173,26 +171,26 @@ const LayoutArchive = props => {
  * @returns
  */
 const LayoutSlug = props => {
-    const {post, lock, prev, next, validPassword} = props
+ const {post, lock, prev, next, validPassword} = props
 
-    return (
-        <LayoutBase {...props}>
+ return (
+     <LayoutBase {...props}>
 
-            {lock && <ArticleLock validPassword={validPassword}/>}
+      {lock && <ArticleLock validPassword={validPassword} />}
 
-            {!lock && <div id="article-wrapper" className="px-2">
-                <>
-                    <ArticleInfo post={post}/>
-                    <NotionPage post={post}/>
-                    <ShareBar post={post}/>
-                    <Comment frontMatter={post}/>
-                    {/* 上一篇下一篇文章 */}
-                    {post?.type === 'Post' && <ArticleAround prev={prev} next={next}/>}
-                </>
-            </div>}
+      {!lock && <div id="article-wrapper" className="px-2">
+       <>
+        <ArticleInfo post={post} />
+        <NotionPage post={post} />
+        <ShareBar post={post} />
+        <Comment frontMatter={post} />
+        {/* 上一篇下一篇文章 */}
+        {post?.type === 'Post' && <ArticleAround prev={prev} next={next}/>}
+       </>
+      </div>}
 
-        </LayoutBase>
-    )
+     </LayoutBase>
+ )
 }
 
 /**
@@ -201,9 +199,9 @@ const LayoutSlug = props => {
  * @returns
  */
 const Layout404 = (props) => {
-    return <LayoutBase {...props}>
-        404 Not found.
-    </LayoutBase>
+ return <LayoutBase {...props}>
+  404 Not found.
+ </LayoutBase>
 }
 
 /**
@@ -212,28 +210,28 @@ const Layout404 = (props) => {
  * @returns
  */
 const LayoutCategoryIndex = (props) => {
-    const {categoryOptions} = props
+ const { categoryOptions } = props
 
-    return (
-        <LayoutBase {...props}>
-            <div id='category-list' className='duration-200 flex flex-wrap'>
-                {categoryOptions?.map(category => {
-                    return (
-                        <Link
-                            key={category.name}
-                            href={`/category/${category.name}`}
-                            passHref
-                            legacyBehavior>
-                            <div
-                                className={'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'}>
-                                <i className='mr-4 fas fa-folder'/>{category.name}({category.count})
-                            </div>
-                        </Link>
-                    )
-                })}
-            </div>
-        </LayoutBase>
-    )
+ return (
+     <LayoutBase {...props}>
+      <div id='category-list' className='duration-200 flex flex-wrap'>
+       {categoryOptions?.map(category => {
+        return (
+            <Link
+                key={category.name}
+                href={`/category/${category.name}`}
+                passHref
+                legacyBehavior>
+             <div
+                 className={'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'}>
+              <i className='mr-4 fas fa-folder' />{category.name}({category.count})
+             </div>
+            </Link>
+        )
+       })}
+      </div>
+     </LayoutBase>
+ )
 }
 
 /**
@@ -242,37 +240,35 @@ const LayoutCategoryIndex = (props) => {
  * @returns
  */
 const LayoutTagIndex = (props) => {
-    const {tagOptions} = props
-    return (
-        <LayoutBase {...props}>
-            <div>
-                <div id='tags-list' className='duration-200 flex flex-wrap'>
-                    {tagOptions.map(tag => {
-                        return (
-                            <div key={tag.name} className='p-2'>
-                                <Link key={tag} href={`/tag/${encodeURIComponent(tag.name)}`} passHref
-                                      className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200 mr-2 py-1 px-2 text-xs whitespace-nowrap dark:hover:text-white text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background dark:bg-gray-800`}>
-                                    <div className='font-light dark:text-gray-400'><i
-                                        className='mr-1 fas fa-tag'/> {tag.name + (tag.count ? `(${tag.count})` : '')}
-                                    </div>
-                                </Link>
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
-        </LayoutBase>
-    )
+ const { tagOptions } = props
+ return (
+     <LayoutBase {...props}>
+      <div>
+       <div id='tags-list' className='duration-200 flex flex-wrap'>
+        {tagOptions.map(tag => {
+         return (
+             <div key={tag.name} className='p-2'>
+              <Link key={tag} href={`/tag/${encodeURIComponent(tag.name)}`} passHref
+                    className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200 mr-2 py-1 px-2 text-xs whitespace-nowrap dark:hover:text-white text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background dark:bg-gray-800`}>
+               <div className='font-light dark:text-gray-400'><i className='mr-1 fas fa-tag' /> {tag.name + (tag.count ? `(${tag.count})` : '')} </div>
+              </Link>
+             </div>
+         )
+        })}
+       </div>
+      </div>
+     </LayoutBase>
+ )
 }
 
 export {
-    CONFIG as THEME_CONFIG,
-    LayoutIndex,
-    LayoutSearch,
-    LayoutArchive,
-    LayoutSlug,
-    Layout404,
-    LayoutPostList,
-    LayoutCategoryIndex,
-    LayoutTagIndex
+ CONFIG as THEME_CONFIG,
+ LayoutIndex,
+ LayoutSearch,
+ LayoutArchive,
+ LayoutSlug,
+ Layout404,
+ LayoutPostList,
+ LayoutCategoryIndex,
+ LayoutTagIndex
 }
