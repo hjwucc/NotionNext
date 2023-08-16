@@ -46,7 +46,7 @@ const LayoutBase = props => {
 
   return (
         <ThemeGlobalNobelium.Provider value={{ searchModal }}>
-            <div id='theme-nobelium' className='nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen'>
+            <div id='theme-nobelium' className='nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen flex flex-col'>
                 {/* SEO相关 */}
                 <CommonHead meta={meta} />
                 {/* SEO相关 */}
@@ -145,20 +145,38 @@ const LayoutPostList = props => {
  * @returns
  */
 const LayoutSearch = props => {
- const { keyword } = props
- useEffect(() => {
-  if (isBrowser) {
-   replaceSearchResult({
-    doms: document.getElementById('posts-wrapper'),
-    search: keyword,
-    target: {
-     element: 'span',
-     className: 'text-red-500 border-b border-dashed'
+  const { keyword, posts } = props
+  useEffect(() => {
+    if (isBrowser) {
+      replaceSearchResult({
+        doms: document.getElementById('posts-wrapper'),
+        search: keyword,
+        target: {
+          element: 'span',
+          className: 'text-red-500 border-b border-dashed'
+        }
+      })
     }
-   })
+  }, [])
+
+  // 在列表中进行实时过滤
+  const [filterKey, setFilterKey] = useState('')
+  let filteredBlogPosts = []
+  if (filterKey && posts) {
+    filteredBlogPosts = posts.filter(post => {
+      const tagContent = post?.tags ? post?.tags.join(' ') : ''
+      const searchContent = post.title + post.summary + tagContent
+      return searchContent.toLowerCase().includes(filterKey.toLowerCase())
+    })
+  } else {
+    filteredBlogPosts = deepClone(posts)
   }
- }, [])
- return <LayoutPostList {...props} slotTop={<SearchNavBar {...props} />} />
+  console.log('posts', props, posts, filteredBlogPosts)
+
+  return <LayoutBase {...props} topSlot={<BlogListBar {...props} setFilterKey={setFilterKey} />}>
+    <SearchNavBar {...props} />
+    {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} posts={filteredBlogPosts} /> : <BlogListScroll {...props} posts={filteredBlogPosts} />}
+  </LayoutBase>
 }
 
 /**
