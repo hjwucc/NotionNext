@@ -105,13 +105,20 @@ const renderCollapseCode = () => {
     codeBlock.parentNode.insertBefore(collapseWrapper, codeBlock)
     panel.appendChild(codeBlock)
 
-    header.addEventListener('click', () => {
+    function collapseCode() {
       panel.classList.toggle('invisible')
       panel.classList.toggle('h-0')
       panel.classList.toggle('h-auto')
       header.querySelector('svg').classList.toggle('rotate-180')
       panelWrapper.classList.toggle('border-gray-300')
-    })
+    }
+
+    // 点击后折叠展开代码
+    header.addEventListener('click', collapseCode)
+    // 是否自动展开
+    if (JSON.parse(BLOG.CODE_COLLAPSE_EXPAND_DEFAULT)) {
+      header.click()
+    }
   }
 }
 
@@ -140,8 +147,10 @@ const renderMermaid = async() => {
           }
           if (needLoad) {
             loadExternalResource(BLOG.MERMAID_CDN, 'js').then(url => {
-              const mermaid = window.mermaid
-              mermaid.contentLoaded()
+              setTimeout(() => {
+                const mermaid = window.mermaid
+                mermaid?.contentLoaded()
+              }, 100)
             })
           }
         }
