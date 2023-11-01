@@ -33,11 +33,11 @@ export const ArticleInfo = (props) => {
                         <span className="block">&nbsp;|&nbsp;</span>
                     </div>
                     <div className="mr-2 mb-4 md:ml-0">
-                        {post?.publishTime}
+                        {post?.publishDay}
                     </div>
                     <span className='mr-2'>|</span>
                     <span className='mx-2 text-gray-400 dark:text-gray-500'>
-                        {locale.COMMON.LAST_EDITED_TIME}: {post?.lastEditedTime}
+                        {locale.COMMON.LAST_EDITED_TIME}: {post?.lastEditedDay}
                     </span>
                     {post?.tags && (
                         <div className="flex flex-nowrap max-w-full overflow-x-auto article-tags">
