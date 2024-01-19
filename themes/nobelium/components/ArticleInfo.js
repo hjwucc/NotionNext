@@ -36,9 +36,9 @@ export const ArticleInfo = (props) => {
                         {locale.COMMON.POST_TIME}: {post?.publishDay}
                         <span className="block">&nbsp;|&nbsp;</span>
                     </div>
-                    <div className='mr-2 mb-4 md:ml-0'>
+                    <span className='mr-2 mb-4 md:ml-0'>
                         {locale.COMMON.LAST_EDITED_TIME}: {post?.lastEditedDay}
-                    </div>
+                    </span>
                     {post?.tags && (
                         <div className="flex flex-nowrap max-w-full overflow-x-auto article-tags">
                             {post?.tags.map(tag => (
