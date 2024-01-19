@@ -30,26 +30,26 @@ export const ArticleInfo = (props) => {
                             />
                             <p className="ml-2 md:block">{siteConfig('AUTHOR')}</p>
                         </a>
-                        <span className="block">&nbsp;/&nbsp;</span>
+                        <span className="block">&nbsp;|&nbsp;</span>
                     </div>
                     <div className="mr-2 mb-4 md:ml-0">
-                        {post?.publishDay}
+                        {locale.COMMON.POST_TIME}: {post?.publishDay}
                     </div>
-                    <span className='mr-2'>|</span>
-                    <span className='mx-2 text-gray-400 dark:text-gray-500'>
+                    <span className="block">&nbsp;|&nbsp;</span>
+                    <span className='mr-2 mb-4 md:ml-0'>
                         {locale.COMMON.LAST_EDITED_TIME}: {post?.lastEditedDay}
                     </span>
                     {post?.tags && (
                         <div className="flex flex-nowrap max-w-full overflow-x-auto article-tags">
                             {post?.tags.map(tag => (
-                                <TagItem key={tag} tag={tag} />
+                                <TagItem key={tag} tag={tag}/>
                             ))}
                         </div>
                     )}
                     <span className="hidden busuanzi_container_page_pv mr-2">
-                        <i className='mr-1 fas fa-eye' />
+                        <i className='mr-1 fas fa-eye'/>
                         &nbsp;
-                        <span className="mr-2 busuanzi_value_page_pv" />
+                        <span className="mr-2 busuanzi_value_page_pv"/>
                     </span>
                 </nav>
             </>}

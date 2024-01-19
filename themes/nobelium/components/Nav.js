@@ -53,7 +53,6 @@ const Nav = props => {
 
                     </div>
 
-                </Link>
                 {navBarTitle
                   ? (
                         <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
@@ -66,6 +65,7 @@ const Nav = props => {
                             {/* ,{' '}<span className="font-normal">{siteConfig('DESCRIPTION')}</span> */}
                         </p>
                     )}
+                </Link>
             </div>
             <NavBar {...props} />
         </div>
