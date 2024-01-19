@@ -1,14 +1,13 @@
 import Image from 'next/image'
-import BLOG from '@/blog.config'
 import TagItem from './TagItem'
 import md5 from 'js-md5'
-import {useGlobal} from "@/lib/global";
+import { siteConfig } from '@/lib/config'
 
 export const ArticleInfo = (props) => {
     const {post} = props
     const { locale } = useGlobal()
 
-    const emailHash = md5(BLOG.CONTACT_EMAIL)
+  const emailHash = md5(siteConfig('CONTACT_EMAIL', 'wmnihaoya@gmail.com'))
 
     return <section className="flex-wrap flex mt-2 text-gray--600 dark:text-gray-400 font-light leading-8">
         <div>
@@ -20,17 +19,17 @@ export const ArticleInfo = (props) => {
             {post?.type !== 'Page' && <>
                 <nav className="flex mt-7 items-start text-gray-500 dark:text-gray-400">
                     <div className="flex mb-4">
-                        <a href={BLOG.CONTACT_GITHUB || 'https://twitter.com/hjwucc'} className="flex">
+                        <a href={siteConfig('CONTACT_GITHUB', 'https://github.com/hjwucc')} className="flex">
                             <Image
-                                alt={BLOG.AUTHOR}
+                                alt={siteConfig('AUTHOR')}
                                 width={24}
                                 height={24}
                                 src={`https://gravatar.com/avatar/${emailHash}`}
                                 className="rounded-full"
                             />
-                            <p className="ml-2 md:block">{BLOG.AUTHOR}</p>
+                            <p className="ml-2 md:block">{siteConfig('AUTHOR')}</p>
                         </a>
-                        <span className="block">&nbsp;|&nbsp;</span>
+                        <span className="block">&nbsp;/&nbsp;</span>
                     </div>
                     <div className="mr-2 mb-4 md:ml-0">
                         {post?.publishDay}
@@ -42,15 +41,15 @@ export const ArticleInfo = (props) => {
                     {post?.tags && (
                         <div className="flex flex-nowrap max-w-full overflow-x-auto article-tags">
                             {post?.tags.map(tag => (
-                                <TagItem key={tag} tag={tag}/>
+                                <TagItem key={tag} tag={tag} />
                             ))}
                         </div>
                     )}
                     <span className="hidden busuanzi_container_page_pv mr-2">
-                    <i className='mr-1 fas fa-eye'/>
+                        <i className='mr-1 fas fa-eye' />
                         &nbsp;
-                        <span className="mr-2 busuanzi_value_page_pv"/>
-                </span>
+                        <span className="mr-2 busuanzi_value_page_pv" />
+                    </span>
                 </nav>
             </>}
 
