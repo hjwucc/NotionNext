@@ -57,7 +57,7 @@ export const BlogListScroll = props => {
                       </h2>
 
                       <div className="mb-4 text-sm text-gray-700 dark:text-white">
-                          by <a href="#" className="text-gray-700">{siteConfig('AUTHOR')}</a> on {p.date?.start_date || p.createdTime}
+                          by <a href="#" className="text-gray-700 dark:text-white">{siteConfig('AUTHOR')}</a> on {p.date?.start_date || p.createdTime}
                       </div>
 
                       <p className="text-gray-700 leading-normal">

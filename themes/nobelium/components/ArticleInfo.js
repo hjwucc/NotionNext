@@ -34,11 +34,11 @@ export const ArticleInfo = (props) => {
                     </div>
                     <div className="mr-2 mb-4 md:ml-0">
                         {locale.COMMON.POST_TIME}: {post?.publishDay}
+                        <span className="block">&nbsp;|&nbsp;</span>
                     </div>
-                    <span className="block">&nbsp;|&nbsp;</span>
-                    <span className='mr-2 mb-4 md:ml-0'>
+                    <div className='mr-2 mb-4 md:ml-0'>
                         {locale.COMMON.LAST_EDITED_TIME}: {post?.lastEditedDay}
-                    </span>
+                    </div>
                     {post?.tags && (
                         <div className="flex flex-nowrap max-w-full overflow-x-auto article-tags">
                             {post?.tags.map(tag => (
