@@ -2,6 +2,7 @@ import Image from 'next/image'
 import TagItem from './TagItem'
 import md5 from 'js-md5'
 import { siteConfig } from '@/lib/config'
+import {useGlobal} from "@/lib/global";
 
 export const ArticleInfo = (props) => {
     const {post} = props
