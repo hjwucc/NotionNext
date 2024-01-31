@@ -38,14 +38,16 @@ export const useNobeliumGlobal = () => useContext(ThemeGlobalNobelium)
  * @constructor
  */
 const LayoutBase = props => {
- const { children, post, topSlot, meta } = props
-
+  const { children, post, meta } = props
   const fullWidth = post?.fullWidth ?? false
   const { onLoading } = useGlobal()
   const searchModal = useRef(null)
+  // 在列表中进行实时过滤
+  const [filterKey, setFilterKey] = useState('')
+  const topSlot = <BlogListBar {...props}/>
 
   return (
-        <ThemeGlobalNobelium.Provider value={{ searchModal }}>
+        <ThemeGlobalNobelium.Provider value={{ searchModal, filterKey, setFilterKey }}>
             <div id='theme-nobelium' className='nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen flex flex-col'>
                 {/* SEO相关 */}
                 <CommonHead meta={meta} />
@@ -115,26 +117,25 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
- const { posts, topSlot } = props
-
- // 在列表中进行实时过滤
- const [filterKey, setFilterKey] = useState('')
- let filteredBlogPosts = []
- if (filterKey && posts) {
-  filteredBlogPosts = posts.filter(post => {
-   const tagContent = post?.tags ? post?.tags.join(' ') : ''
-   const searchContent = post.title + post.summary + tagContent
-   return searchContent.toLowerCase().includes(filterKey.toLowerCase())
-  })
- } else {
-  filteredBlogPosts = deepClone(posts)
- }
+  const { posts, topSlot, tag } = props
+  const { filterKey } = useNobeliumGlobal()
+  let filteredBlogPosts = []
+  if (filterKey && posts) {
+    filteredBlogPosts = posts.filter(post => {
+      const tagContent = post?.tags ? post?.tags.join(' ') : ''
+      const searchContent = post.title + post.summary + tagContent
+      return searchContent.toLowerCase().includes(filterKey.toLowerCase())
+    })
+  } else {
+    filteredBlogPosts = deepClone(posts)
+  }
 
   return (
-        <LayoutBase {...props} topSlot={<BlogListBar {...props} setFilterKey={setFilterKey} />}>
+        <>
             {topSlot}
+            {tag && <SearchNavBar {...props} />}
             {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} posts={filteredBlogPosts} /> : <BlogListScroll {...props} posts={filteredBlogPosts} />}
-        </LayoutBase>
+        </>
   )
 }
 
@@ -160,7 +161,7 @@ const LayoutSearch = props => {
   }, [])
 
   // 在列表中进行实时过滤
-  const [filterKey, setFilterKey] = useState('')
+  const { filterKey } = useNobeliumGlobal()
   let filteredBlogPosts = []
   if (filterKey && posts) {
     filteredBlogPosts = posts.filter(post => {
@@ -172,10 +173,10 @@ const LayoutSearch = props => {
     filteredBlogPosts = deepClone(posts)
   }
 
-  return <LayoutBase {...props} topSlot={<BlogListBar {...props} setFilterKey={setFilterKey} />}>
+  return <>
     <SearchNavBar {...props} />
     {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} posts={filteredBlogPosts} /> : <BlogListScroll {...props} posts={filteredBlogPosts} />}
-  </LayoutBase>
+  </>
 }
 
 /**
@@ -184,14 +185,14 @@ const LayoutSearch = props => {
  * @returns
  */
 const LayoutArchive = props => {
- const { archivePosts } = props
- return (
-     <LayoutBase {...props}>
-      <div className="mb-10 pb-20 md:py-12 p-3  min-h-screen w-full">
-       {Object.keys(archivePosts).map(archiveTitle => <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />)}
-      </div>
-     </LayoutBase>
- )
+  const { archivePosts } = props
+  return (
+        <>
+            <div className="mb-10 pb-20 md:py-12 p-3  min-h-screen w-full">
+                {Object.keys(archivePosts).map(archiveTitle => <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />)}
+            </div>
+        </>
+  )
 }
 
 /**
@@ -202,8 +203,8 @@ const LayoutArchive = props => {
 const LayoutSlug = props => {
  const {post, lock, prev, next, validPassword} = props
 
- return (
-     <LayoutBase {...props}>
+  return (
+        <>
 
       {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -218,8 +219,8 @@ const LayoutSlug = props => {
        </>
       </div>}
 
-     </LayoutBase>
- )
+        </>
+  )
 }
 
 /**
@@ -228,9 +229,9 @@ const LayoutSlug = props => {
  * @returns
  */
 const Layout404 = (props) => {
- return <LayoutBase {...props}>
-  404 Not found.
- </LayoutBase>
+  return <>
+        404 Not found.
+    </>
 }
 
 /**
@@ -241,26 +242,26 @@ const Layout404 = (props) => {
 const LayoutCategoryIndex = (props) => {
  const { categoryOptions } = props
 
- return (
-     <LayoutBase {...props}>
-      <div id='category-list' className='duration-200 flex flex-wrap'>
-       {categoryOptions?.map(category => {
-        return (
-            <Link
-                key={category.name}
-                href={`/category/${category.name}`}
-                passHref
-                legacyBehavior>
-             <div
-                 className={'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'}>
-              <i className='mr-4 fas fa-folder' />{category.name}({category.count})
-             </div>
-            </Link>
-        )
-       })}
-      </div>
-     </LayoutBase>
- )
+  return (
+        <>
+            <div id='category-list' className='duration-200 flex flex-wrap'>
+                {categoryOptions?.map(category => {
+                  return (
+                        <Link
+                            key={category.name}
+                            href={`/category/${category.name}`}
+                            passHref
+                            legacyBehavior>
+                            <div
+                                className={'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'}>
+                                <i className='mr-4 fas fa-folder' />{category.name}({category.count})
+                            </div>
+                        </Link>
+                  )
+                })}
+            </div>
+        </>
+  )
 }
 
 /**
@@ -269,35 +270,36 @@ const LayoutCategoryIndex = (props) => {
  * @returns
  */
 const LayoutTagIndex = (props) => {
- const { tagOptions } = props
- return (
-     <LayoutBase {...props}>
-      <div>
-       <div id='tags-list' className='duration-200 flex flex-wrap'>
-        {tagOptions.map(tag => {
-         return (
-             <div key={tag.name} className='p-2'>
-              <Link key={tag} href={`/tag/${encodeURIComponent(tag.name)}`} passHref
-                    className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200 mr-2 py-1 px-2 text-xs whitespace-nowrap dark:hover:text-white text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background dark:bg-gray-800`}>
-               <div className='font-light dark:text-gray-400'><i className='mr-1 fas fa-tag' /> {tag.name + (tag.count ? `(${tag.count})` : '')} </div>
-              </Link>
-             </div>
-         )
-        })}
-       </div>
-      </div>
-     </LayoutBase>
- )
+  const { tagOptions } = props
+  return (
+        <>
+            <div>
+                <div id='tags-list' className='duration-200 flex flex-wrap'>
+                    {tagOptions.map(tag => {
+                      return (
+                            <div key={tag.name} className='p-2'>
+                                <Link key={tag} href={`/tag/${encodeURIComponent(tag.name)}`} passHref
+                                    className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200 mr-2 py-1 px-2 text-xs whitespace-nowrap dark:hover:text-white text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background dark:bg-gray-800`}>
+                                    <div className='font-light dark:text-gray-400'><i className='mr-1 fas fa-tag' /> {tag.name + (tag.count ? `(${tag.count})` : '')} </div>
+                                </Link>
+                            </div>
+                      )
+                    })}
+                </div>
+            </div>
+        </>
+  )
 }
 
 export {
- CONFIG as THEME_CONFIG,
- LayoutIndex,
- LayoutSearch,
- LayoutArchive,
- LayoutSlug,
- Layout404,
- LayoutPostList,
- LayoutCategoryIndex,
- LayoutTagIndex
+  CONFIG as THEME_CONFIG,
+  LayoutBase,
+  LayoutIndex,
+  LayoutSearch,
+  LayoutArchive,
+  LayoutSlug,
+  Layout404,
+  LayoutPostList,
+  LayoutCategoryIndex,
+  LayoutTagIndex
 }
