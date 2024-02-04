@@ -22,6 +22,8 @@ import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
+import CommonHead from '@/components/CommonHead'
+import ArticleAround from './components/ArticleAround'
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 import { siteConfig } from '@/lib/config'
 
