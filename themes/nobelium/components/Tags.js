@@ -12,7 +12,7 @@ const Tags = props => {
           const selected = tag.name === currentTag
           return (
             <li
-              key={tag.name}
+              key={tag.id}
               className={`mr-3 font-medium border whitespace-nowrap dark:text-gray-300 ${
                 selected
                   ? 'text-white bg-black border-black dark:bg-gray-600 dark:border-gray-600'
@@ -20,8 +20,7 @@ const Tags = props => {
               }`}
             >
               <Link
-                key={tag.name}
-                href={selected ? '/search' : `/tag/${encodeURIComponent(tag.name)}`}
+                href={selected ? '/' : `/tag/${encodeURIComponent(tag.name)}`}
                 className="px-4 py-2 block">
 
                 {`${tag.name} (${tag.count})`}
