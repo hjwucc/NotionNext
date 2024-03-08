@@ -20,8 +20,7 @@ const Tags = props => {
               }`}
             >
               <Link
-                key={tag.id}
-                href={selected ? '/search' : `/tag/${encodeURIComponent(tag.name)}`}
+                href={selected ? '/' : `/tag/${encodeURIComponent(tag.name)}`}
                 className="px-4 py-2 block">
 
                 {`${tag.name} (${tag.count})`}
