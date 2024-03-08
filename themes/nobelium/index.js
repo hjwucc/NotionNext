@@ -24,6 +24,7 @@ import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import ArticleAround from './components/ArticleAround'
 import { siteConfig } from '@/lib/config'
+import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 
 const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
