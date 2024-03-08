@@ -22,10 +22,12 @@ import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
-import CommonHead from '@/components/CommonHead'
 import ArticleAround from './components/ArticleAround'
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 import { siteConfig } from '@/lib/config'
+import dynamic from 'next/dynamic'
+
+const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
 
 // 主题全局状态
 const ThemeGlobalNobelium = createContext()
@@ -38,7 +40,7 @@ export const useNobeliumGlobal = () => useContext(ThemeGlobalNobelium)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, post, meta } = props
+  const { children, post } = props
   const fullWidth = post?.fullWidth ?? false
   const { onLoading } = useGlobal()
   const searchModal = useRef(null)
@@ -48,10 +50,8 @@ const LayoutBase = props => {
 
   return (
         <ThemeGlobalNobelium.Provider value={{ searchModal, filterKey, setFilterKey }}>
-            <div id='theme-nobelium' className='nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen flex flex-col'>
-                {/* SEO相关 */}
-                <CommonHead meta={meta} />
-                {/* SEO相关 */}
+            <div id='theme-nobelium' className={`${siteConfig('FONT_STYLE')} nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen flex flex-col scroll-smooth`}>
+
                 <Style />
 
                 {/* 顶部导航栏 */}
@@ -201,8 +201,23 @@ const LayoutArchive = props => {
  * @returns
  */
 const LayoutSlug = props => {
- const {post, lock, prev, next, validPassword} = props
-
+  const { post, lock, prev, next, validPassword } = props
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
   return (
         <>
 

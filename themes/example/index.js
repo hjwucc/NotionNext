@@ -25,7 +25,6 @@ import TagItem from './components/TagItem'
 import { useRouter } from 'next/router'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
-import CommonHead from '@/components/CommonHead'
 import { siteConfig } from '@/lib/config'
 
 /**
@@ -36,7 +35,7 @@ import { siteConfig } from '@/lib/config'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta } = props
+  const { children } = props
   const { onLoading, fullWidth } = useGlobal()
   const router = useRouter()
   const { category, tag } = props
@@ -63,10 +62,7 @@ const LayoutBase = props => {
   //   }, [onLoading])
 
   return (
-        <div id='theme-example' className='dark:text-gray-300  bg-white dark:bg-black'>
-
-            {/* SEO信息 */}
-            <CommonHead meta={meta}/>
+        <div id='theme-example' className={`${siteConfig('FONT_STYLE')} dark:text-gray-300  bg-white dark:bg-black scroll-smooth`} >
 
             <Style/>
 
@@ -150,6 +146,22 @@ const LayoutPostList = props => {
  */
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
   return (
         <>
             {lock
@@ -253,11 +265,11 @@ export {
   CONFIG as THEME_CONFIG,
   LayoutBase,
   LayoutIndex,
-  LayoutPostList,
   LayoutSearch,
   LayoutArchive,
   LayoutSlug,
   Layout404,
+  LayoutPostList,
   LayoutCategoryIndex,
   LayoutTagIndex
 }
