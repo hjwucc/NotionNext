@@ -23,7 +23,6 @@ import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import ArticleAround from './components/ArticleAround'
-import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 import { siteConfig } from '@/lib/config'
 import dynamic from 'next/dynamic'
 
